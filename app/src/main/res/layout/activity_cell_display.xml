@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_inventory_display"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -10,7 +11,23 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.ironstargaming.castv02.CellDisplayActivity">
 
+    <TextView
+        android:id="@+id/cell_name"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:background="#aaaaaa"
+        android:gravity="center_horizontal"
+        android:layout_alignParentTop="true"/>
+    <TextView
+        android:id="@+id/cell_id"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:text="CELL ID"
+        android:layout_below="@+id/cell_name"/>
     <ListView
+        android:layout_below="@+id/cell_id"
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></ListView>
@@ -51,12 +68,25 @@
             android:textColor="#A2AAB0" />
     </RelativeLayout>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/edit_cell_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="false"
+        android:visibility="gone"
+        android:src="@drawable/e"
+
+        />
+
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/cell_fab"
+        android:id="@+id/add_cell_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:visibility="gone"
+        android:src="@drawable/a"
          />
 </RelativeLayout>

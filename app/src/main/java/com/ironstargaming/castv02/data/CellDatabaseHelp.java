@@ -24,7 +24,8 @@ public class CellDatabaseHelp extends SQLiteOpenHelper {
                 + CellEntry.TABLE_NAME + "("
                 + CellEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + CellEntry.COLUMN_CELL_NAME + " TEXT NOT NULL,"
-                + CellEntry.COLUMN_CELL_SCOPE + " INTEGER NOT NULL,"
+                + CellEntry.COLUMN_CELL_VISIBILITY + " INTEGER NOT NULL, "
+               // + CellEntry.COLUMN_CELL_SCOPE + " INTEGER NOT NULL,"
                 + CellEntry.COLUMN_PARENT_CELL + " INTEGER NOT NULL);";
         cellDatabase.execSQL(SQL_CREATE_CELLS_TABLE);
 

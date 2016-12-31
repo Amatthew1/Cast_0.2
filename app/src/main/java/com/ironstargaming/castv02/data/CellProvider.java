@@ -98,9 +98,12 @@ public class CellProvider extends ContentProvider{
         Log.v("Provider", "parent_cell: " + parent_cell);
         if (parent_cell==null){throw new IllegalArgumentException("Cell requires a parent");}
 
-        Integer cell_scope = values.getAsInteger(CellEntry.COLUMN_CELL_SCOPE);
-        Log.v("Provider", "cell_scope: " + cell_scope);
-        if(cell_scope==null){throw new IllegalArgumentException("Cell scope incorrect @ provider");}
+        Integer cell_visibility = values.getAsInteger(CellEntry.COLUMN_CELL_VISIBILITY);
+        if((cell_visibility<0 || cell_visibility>2)&& cell_visibility!=null){throw new IllegalArgumentException("Cell visibility incorrect @provider @insert");}
+
+       // Integer cell_scope = values.getAsInteger(CellEntry.COLUMN_CELL_SCOPE);
+       // Log.v("Provider", "cell_scope: " + cell_scope);
+      //  if(cell_scope==null){throw new IllegalArgumentException("Cell scope incorrect @ provider");}
 
         SQLiteDatabase database = mDBHelper.getWritableDatabase();
         long id = database.insert(CellEntry.TABLE_NAME, null, values);
@@ -156,11 +159,15 @@ public class CellProvider extends ContentProvider{
             Integer parent_cell=values.getAsInteger(CellEntry.COLUMN_PARENT_CELL);
             if(parent_cell==null){throw new IllegalArgumentException("cell requires a parent @update");}
         }
+     //   if(values.containsKey(CellEntry.COLUMN_CELL_VISIBILITY)){
+     //       Integer cell_visibility=values.getAsInteger(CellEntry.COLUMN_CELL_VISIBILITY);
+     //       if((cell_visibility<0 || cell_visibility>2)&& cell_visibility!=null){throw new IllegalArgumentException("Cell visibility incorrect @provider @update");}
+      //  }
 
-        if (values.containsKey(CellEntry.COLUMN_CELL_SCOPE)){
-            Integer cell_scope = values.getAsInteger(CellEntry.COLUMN_CELL_SCOPE);
-            if(cell_scope==null||cell_scope<-2||cell_scope>5){throw new IllegalArgumentException("error with cell scope @update @provider");}
-        }
+       // if (values.containsKey(CellEntry.COLUMN_CELL_SCOPE)){
+      //      Integer cell_scope = values.getAsInteger(CellEntry.COLUMN_CELL_SCOPE);
+      //      if(cell_scope==null||cell_scope<-2||cell_scope>5){throw new IllegalArgumentException("error with cell scope @update @provider");}
+      //  }
     getContext().getContentResolver().notifyChange(uri,null);
         return database.update(CellEntry.TABLE_NAME, values,selection,selectionArgs);
 

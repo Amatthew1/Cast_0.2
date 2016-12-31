@@ -26,12 +26,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="CELL SCOPE"/>
-    <EditText
-        android:id="@+id/cell_scope_edittext"
-        android:layout_width="match_parent"
+    <RadioGroup
+        android:id="@+id/radio_vis_group"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="152dp" >
+
+        <RadioButton
+            android:id="@+id/radio_vis_hidden"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/vis_hidden" />
+
+        <RadioButton
+            android:id="@+id/radio_vis_obscure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/vis_obscure" />
+
+        <RadioButton
+            android:id="@+id/radio_vis_visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/vis_visible" />
+    </RadioGroup>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

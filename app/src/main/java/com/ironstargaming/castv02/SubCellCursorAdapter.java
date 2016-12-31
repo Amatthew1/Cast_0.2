@@ -24,9 +24,11 @@ public class SubCellCursorAdapter extends CursorAdapter{
     public void bindView(View view, Context context, Cursor cursor) {
         Log.d("LOOOOOOOG","DURING");
         TextView subCellTextView = (TextView) view.findViewById(R.id.sub_cell_name_text);
+        if(cursor.getString(cursor.getColumnIndex(CellContract.CellEntry.COLUMN_CELL_NAME))==null){
+            Log.d("IS IS NULL?","YES");
+        }
         String subCellName = cursor.getString(cursor.getColumnIndex(CellContract.CellEntry.COLUMN_CELL_NAME));
         subCellTextView.setText(subCellName);
-        Log.d("LOOOOOOOG","DURING");
     }
 
     @Override

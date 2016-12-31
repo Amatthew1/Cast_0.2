@@ -19,6 +19,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
@@ -33,11 +35,13 @@ public class CellEditorActivity extends AppCompatActivity implements LoaderManag
 
     private static final int EXISTING_CELL_LOADER = 1;
     private EditText mCellNameEditText;
+    private RadioGroup mCellVisibilityRG;
     private TextView mParentCellTextView;
-    private EditText mCellScopeEditText;
 
     private Uri mCurrentCellUri;
     private int mParentCell;
+
+    private Keystore store;
 
     private boolean mCellHasChanged = false;
     private View.OnTouchListener mTouchListner = new View.OnTouchListener(){
@@ -55,31 +59,45 @@ public class CellEditorActivity extends AppCompatActivity implements LoaderManag
         Intent intent = getIntent();
         mCurrentCellUri = intent.getData();
         mParentCell = intent.getIntExtra("parent_cell", 0);
+        Log.v("Parent Cell", String.valueOf(mParentCell));
         if(mCurrentCellUri == null){
             setTitle("Add New Cell");
         }else{
             setTitle("Edit Existing Cell");
+            getLoaderManager().initLoader(EXISTING_CELL_LOADER,null, this);
         }
         mCellNameEditText = (EditText) findViewById(R.id.cell_name_edittext);
         mParentCellTextView = (TextView) findViewById(R.id.parent_cell_display);
-        mCellScopeEditText = (EditText) findViewById(R.id.cell_scope_edittext);
+        mCellVisibilityRG = (RadioGroup) findViewById(R.id.radio_vis_group);
+        store = Keystore.getInstance(getApplicationContext());
+
 
         mCellNameEditText.setOnTouchListener(mTouchListner);
-        mCellScopeEditText.setOnTouchListener(mTouchListner);
+
     }
 
     private void saveCell(){
         String cellNameString = mCellNameEditText.getText().toString().trim();
-
-
+        Integer cellVisRG_selection = mCellVisibilityRG.getCheckedRadioButtonId();
+        Integer cellVisInte;
+        switch (cellVisRG_selection){
+            case R.id.radio_vis_hidden:
+                cellVisInte =0;
+                break;
+            case R.id.radio_vis_obscure:
+                cellVisInte = 1;
+                break;
+            case R.id.radio_vis_visible:
+                cellVisInte = 2;
+                break;
+            default:
+                cellVisInte = 2;
+                break;
+        }
         Integer parentCellInte = mParentCell;
 
-        String cellScopeString = mCellScopeEditText.getText().toString().trim();
-        Integer cellScopeInteger = Integer.parseInt(cellScopeString);
-
-
         if(mCurrentCellUri==null &&
-                (TextUtils.isEmpty(cellNameString)||TextUtils.isEmpty(cellScopeString))){
+                (TextUtils.isEmpty(cellNameString)||cellVisInte==null)){
             Toast.makeText(getApplicationContext(),"Fill in the rest of the cell, dick", Toast.LENGTH_SHORT);
             return;
         }
@@ -87,9 +105,9 @@ public class CellEditorActivity extends AppCompatActivity implements LoaderManag
 
         values.put(CellEntry.COLUMN_CELL_NAME, cellNameString);
 
-        values.put(CellEntry.COLUMN_CELL_SCOPE, cellScopeInteger);
-
         values.put(CellEntry.COLUMN_PARENT_CELL, parentCellInte);
+
+        values.put(CellEntry.COLUMN_CELL_VISIBILITY, cellVisInte);
 
 
         if(mCurrentCellUri == null){
@@ -213,7 +231,7 @@ public class CellEditorActivity extends AppCompatActivity implements LoaderManag
                 CellEntry._ID,
                 CellEntry.COLUMN_CELL_NAME,
                 CellEntry.COLUMN_PARENT_CELL,
-                CellEntry.COLUMN_CELL_SCOPE
+              //  CellEntry.COLUMN_CELL_SCOPE
                 };
                 return new CursorLoader(this, mCurrentCellUri, projection, null, null,null);
         }
@@ -223,14 +241,15 @@ public class CellEditorActivity extends AppCompatActivity implements LoaderManag
         if (cursor.moveToFirst()){
             mCellNameEditText.setText(cursor.getString(cursor.getColumnIndex(CellEntry.COLUMN_CELL_NAME)));
             mParentCellTextView.setText(Integer.toString(cursor.getInt(cursor.getColumnIndex(CellEntry.COLUMN_PARENT_CELL))));
-            mCellScopeEditText.setText(Integer.toString(cursor.getInt(cursor.getColumnIndex(CellEntry.COLUMN_CELL_SCOPE))));
+        //    mCellScopeEditText.setText(Integer.toString(cursor.getInt(cursor.getColumnIndex(CellEntry.COLUMN_CELL_SCOPE))));
+            //TO DO: SET SELECTION ON VISBILITY RADIO BUTTON
         }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mCellNameEditText.setText("");
-        mCellScopeEditText.setText("");
+     //   mCellScopeEditText.setText("");
     }
 }
 

@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">CASTv0.2</string>
+    <string name="is_storyteller">I am the Storyteller</string>
+    <string name="is_player">I am a player</string>
+
+    <!-- string for cell visibility-->
+    <string name="vis_hidden">Hidden</string>
+    <string name="vis_obscure">Obscure</string>
+    <string name="vis_visible">Visible</string>
 </resources>

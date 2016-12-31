@@ -35,7 +35,8 @@ public class CellContract {
         public final static String _ID = BaseColumns._ID;
         public final static String COLUMN_CELL_NAME= "cell_name";
         public final static String COLUMN_PARENT_CELL= "parent_cell";
-        public static final String COLUMN_CELL_SCOPE= "cell_scope";
+        public final static String COLUMN_CELL_VISIBILITY= "cell_visibility";
+        //public static final String COLUMN_CELL_SCOPE= "cell_scope";
 
         public static final int SCALE_M_TWO = -2; //items
         public static final int SCALE_M_ONE = -1; //body parts, armor, backpacks
@@ -45,6 +46,10 @@ public class CellContract {
         public static final int SCALE_P_THREE = 3; //neighborhoods, collection of similar large terrain features
         public static final int SCALE_P_FOUR = 4;// cities, small lakes and forests
         public static final int SCALE_P_FIVE = 5;// geographic areas, the Nth scope of this build
+
+        public static final int VISIBLE =2;
+        public static final int OBSCURE =1;
+        public static final int HIDDEN =0;
 
 
 
